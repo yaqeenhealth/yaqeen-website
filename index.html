@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>يقين — مدقق المطالبات</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <style>
   :root {
     --navy: #0F2744;
@@ -24,8 +24,8 @@
     --gray-600: #495057;
     --gray-900: #212529;
     --white: #FFFFFF;
-    --font-ar: 'IBM Plex Sans Arabic', sans-serif;
-    --font-en: 'IBM Plex Sans', sans-serif;
+    --font-ar: 'Segoe UI', Tahoma, Arial, sans-serif;
+    --font-en: 'Segoe UI', system-ui, Arial, sans-serif;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: var(--font-ar); background: var(--white); color: var(--gray-900); line-height: 1.7; direction: rtl; }
@@ -408,17 +408,32 @@ function toggleLang() {
   document.querySelectorAll('.hide-ar').forEach(el => { el.style.display = isEn ? '' : 'none'; });
 }
 
-function submitForm() {
+async function submitForm() {
   const clinic = document.getElementById('clinic-name').value.trim();
   const contact = document.getElementById('contact-name').value.trim();
   const phone = document.getElementById('phone').value.trim();
   const email = document.getElementById('email').value.trim();
+  const facility = document.getElementById('facility-type').value;
   if (!clinic || !contact || !phone || !email) {
     alert(document.body.classList.contains('en') ? 'Please fill in all required fields.' : 'يرجى تعبئة جميع الحقول المطلوبة.');
     return;
   }
-  document.getElementById('form-body').style.display = 'none';
-  document.getElementById('form-success').style.display = 'block';
+  const data = { clinic, contact, phone, email, facility };
+  try {
+    const res = await fetch('https://formspree.io/f/xrevbvno', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (res.ok) {
+      document.getElementById('form-body').style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    } else {
+      alert(document.body.classList.contains('en') ? 'Something went wrong. Please try again.' : 'حدث خطأ. يرجى المحاولة مرة أخرى.');
+    }
+  } catch(e) {
+    alert(document.body.classList.contains('en') ? 'Something went wrong. Please try again.' : 'حدث خطأ. يرجى المحاولة مرة أخرى.');
+  }
 }
 </script>
 </body>
