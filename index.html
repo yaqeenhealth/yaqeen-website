@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>يقين — مدقق المطالبات</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0F2744;
+    --navy-light: #1A3A5C;
+    --teal: #0D7A5F;
+    --teal-light: #E1F5EE;
+    --red: #C0392B;
+    --red-light: #FCEBEB;
+    --amber: #D4860A;
+    --amber-light: #FAEEDA;
+    --green: #1D9E75;
+    --green-light: #EAF3DE;
+    --gray-50: #F8F9FA;
+    --gray-100: #F1F3F5;
+    --gray-200: #E9ECEF;
+    --gray-400: #868E96;
+    --gray-600: #495057;
+    --gray-900: #212529;
+    --white: #FFFFFF;
+    --font-ar: 'IBM Plex Sans Arabic', sans-serif;
+    --font-en: 'IBM Plex Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-ar);
+    background: var(--white);
+    color: var(--gray-900);
+    line-height: 1.7;
+    direction: rtl;
+  }
+
+  body.en {
+    font-family: var(--font-en);
+    direction: ltr;
+  }
+
+  .hide-ar { display: none; }
+  body.en .hide-en { display: none; }
+  body.en .hide-ar { display: block; }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--gray-200);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    z-index: 100;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .nav-logo-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--navy);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .nav-logo-text {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--navy);
+    letter-spacing: -0.3px;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .lang-toggle {
+    background: var(--gray-100);
+    border: 1px solid var(--gray-200);
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-600);
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s;
+  }
+  .lang-toggle:hover { background: var(--gray-200); }
+
+  .btn-login {
+    background: transparent;
+    border: 1.5px solid var(--navy);
+    color: var(--navy);
+    border-radius: 8px;
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+    display: inline-block;
+  }
+  .btn-login:hover { background: var(--navy); color: white; }
+
+  .btn-primary {
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.15s;
+  }
+  .btn-primary:hover { background: var(--navy-light); }
+
+  /* HERO */
+  .hero {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 80px 2rem 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--teal-light);
+    color: var(--teal);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    background: var(--teal);
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .hero h1 {
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--navy);
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+  }
+
+  .hero p {
+    font-size: 16px;
+    color: var(--gray-600);
+    margin-bottom: 32px;
+    line-height: 1.8;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .hero-trust {
+    margin-top: 24px;
+    font-size: 12px;
+    color: var(--gray-400);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .hero-trust::before {
+    content: '✓';
+    color: var(--teal);
+    font-weight: 600;
+  }
+
+  /* MOCK RESULT CARD */
+  .mock-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  }
+
+  .mock-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .mock-card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .mock-badge-clean {
+    background: var(--green-light);
+    color: var(--green);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 12px;
+  }
+
+  .mock-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .mock-stat {
+    background: var(--gray-50);
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .mock-stat-num {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .mock-stat-num.red { color: var(--red); }
+  .mock-stat-num.amber { color: var(--amber); }
+
+  .mock-stat-label {
+    font-size: 11px;
+    color: var(--gray-400);
+    margin-top: 2px;
+  }
+
+  .mock-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 13px;
+  }
+
+  .mock-row:last-child { border-bottom: none; }
+
+  .mock-severity {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 10px;
+    min-width: 52px;
+    text-align: center;
+  }
+
+  .sev-high { background: var(--red-light); color: var(--red); }
+  .sev-med { background: var(--amber-light); color: var(--amber); }
+
+  .mock-claim { color: var(--gray-400); font-size: 12px; }
+  .mock-msg { color: var(--gray-600); flex: 1; }
+
+  /* STATS STRIP */
+  .stats-strip {
+    background: var(--gray-50);
+    border-top: 1px solid var(--gray-200);
+    border-bottom: 1px solid var(--gray-200);
+  }
+
+  .stats-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .stat-item {
+    text-align: center;
+    padding: 0 2rem;
+    border-left: 1px solid var(--gray-200);
+  }
+
+  body.en .stat-item { border-left: none; border-right: 1px solid var(--gray-200); }
+
+  .stat-item:last-child { border-left: none; }
+  body.en .stat-item:last-child { border-right: none; }
+
+  .stat-num {
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--navy);
+    letter-spacing: -1px;
+  }
+
+  .stat-label {
+    font-size: 14px;
+    color: var(--gray-400);
+    margin-top: 4px;
+  }
+
+  /* FEATURES */
+  .features {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 72px 2rem;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 12px;
+    letter-spacing: -0.3px;
+  }
+
+  .section-sub {
+    font-size: 16px;
+    color: var(--gray-400);
+    margin-bottom: 48px;
+    max-width: 500px;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .feature-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 24px;
+    transition: box-shadow 0.2s;
+  }
+
+  .feature-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+
+  .feature-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--teal-light);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .feature-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+
+  .feature-desc {
+    font-size: 14px;
+    color: var(--gray-400);
+    line-height: 1.7;
+  }
+
+  /* CTA SECTION */
+  .cta-section {
+    background: var(--navy);
+    padding: 72px 2rem;
+    text-align: center;
+  }
+
+  .cta-section h2 {
+    font-size: 32px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 16px;
+    letter-spacing: -0.3px;
+  }
+
+  .cta-section p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 32px;
+  }
+
+  .btn-white {
+    background: white;
+    color: var(--navy);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 32px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    text-decoration: none;
+    display: inline-block;
+    transition: opacity 0.15s;
+  }
+  .btn-white:hover { opacity: 0.9; }
+
+  /* FOOTER */
+  footer {
+    background: var(--gray-50);
+    border-top: 1px solid var(--gray-200);
+    padding: 32px 2rem;
+    text-align: center;
+    font-size: 13px;
+    color: var(--gray-400);
+  }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; padding: 48px 1.5rem 40px; }
+    .mock-card { display: none; }
+    .features-grid { grid-template-columns: 1fr; }
+    .stats-inner { grid-template-columns: 1fr; }
+    .stat-item { border: none; border-bottom: 1px solid var(--gray-200); padding: 1.5rem; }
+    .stat-item:last-child { border-bottom: none; }
+    .hero h1 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">ي</div>
+    <span class="nav-logo-text hide-en">يقين</span>
+    <span class="nav-logo-text hide-ar" style="display:none">Yaqeen</span>
+  </a>
+  <div class="nav-actions">
+    <button class="lang-toggle" onclick="toggleLang()">
+      <span class="hide-en">EN</span>
+      <span class="hide-ar" style="display:none">عربي</span>
+    </button>
+    <a href="https://yaqeen-validator.streamlit.app" target="_blank" class="btn-login hide-en">تسجيل الدخول</a>
+    <a href="https://yaqeen-validator.streamlit.app" target="_blank" class="btn-login hide-ar" style="display:none">Log in</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-badge hide-en">التحقق من المطالبات قبل التقديم</div>
+    <div class="hero-badge hide-ar" style="display:none">Pre-submission claims validation</div>
+
+    <h1 class="hide-en">اكتشف أخطاء المطالبات<br>قبل أن تكتشفها شركة التأمين</h1>
+    <h1 class="hide-ar" style="display:none">Catch claim errors<br>before the insurer does</h1>
+
+    <p class="hide-en">يقين يفحص كل مطالبة وفق قواعد التأمين والترميز والأهلية قبل التقديم — فتنخفض حالات الرفض ويتسارع التدفق النقدي ويتوقف فريقك عن إعادة معالجة المرفوضات.</p>
+    <p class="hide-ar" style="display:none">Yaqeen checks every claim against Saudi insurance coding rules before submission — reducing denials, accelerating cash flow, and stopping your team from reworking rejections.</p>
+
+    <div class="hero-cta">
+      <a href="https://yaqeen-validator.streamlit.app" target="_blank" class="btn-primary hide-en">← ابدأ الآن</a>
+      <a href="https://yaqeen-validator.streamlit.app" target="_blank" class="btn-primary hide-ar" style="display:none">Get started →</a>
+      <a href="https://yaqeen-validator.streamlit.app" target="_blank" class="btn-login hide-en">تسجيل الدخول</a>
+      <a href="https://yaqeen-validator.streamlit.app" target="_blank" class="btn-login hide-ar" style="display:none">Log in</a>
+    </div>
+
+    <div class="hero-trust hide-en">مصمم لمزودي الرعاية في السعودية · متوافق مع CCHI و NPHIES</div>
+    <div class="hero-trust hide-ar" style="display:none">Built for Saudi healthcare providers · Aligned with CCHI & NPHIES</div>
+  </div>
+
+  <!-- MOCK RESULT CARD -->
+  <div class="mock-card">
+    <div class="mock-card-header">
+      <span class="mock-card-title hide-en">نتائج التحقق</span>
+      <span class="mock-card-title hide-ar" style="display:none">Validation results</span>
+      <span class="mock-badge-clean hide-en">نظيف 93%</span>
+      <span class="mock-badge-clean hide-ar" style="display:none">93% clean</span>
+    </div>
+    <div class="mock-stats">
+      <div class="mock-stat">
+        <div class="mock-stat-num">1,248</div>
+        <div class="mock-stat-label hide-en">إجمالي</div>
+        <div class="mock-stat-label hide-ar" style="display:none">Total</div>
+      </div>
+      <div class="mock-stat">
+        <div class="mock-stat-num red">87</div>
+        <div class="mock-stat-label hide-en">مُعلَّمة</div>
+        <div class="mock-stat-label hide-ar" style="display:none">Flagged</div>
+      </div>
+      <div class="mock-stat">
+        <div class="mock-stat-num amber">7.0%</div>
+        <div class="mock-stat-label hide-en">نسبة التعليم</div>
+        <div class="mock-stat-label hide-ar" style="display:none">Flag rate</div>
+      </div>
+    </div>
+    <div class="mock-row">
+      <span class="mock-severity sev-high hide-en">عالية</span>
+      <span class="mock-severity sev-high hide-ar" style="display:none">High</span>
+      <span class="mock-claim">CLM-100245</span>
+      <span class="mock-msg hide-en">J300 — غير مطابق للتشخيص</span>
+      <span class="mock-msg hide-ar" style="display:none">J300 — diagnosis mismatch</span>
+    </div>
+    <div class="mock-row">
+      <span class="mock-severity sev-high hide-en">عالية</span>
+      <span class="mock-severity sev-high hide-ar" style="display:none">High</span>
+      <span class="mock-claim">CLM-100451</span>
+      <span class="mock-msg hide-en">J885 — كود دواء للجنس الخطأ</span>
+      <span class="mock-msg hide-ar" style="display:none">J885 — drug gender mismatch</span>
+    </div>
+    <div class="mock-row">
+      <span class="mock-severity sev-med hide-en">متوسطة</span>
+      <span class="mock-severity sev-med hide-ar" style="display:none">Medium</span>
+      <span class="mock-claim">CLM-100489</span>
+      <span class="mock-msg hide-en">99213 — كود غير نشط في SBS</span>
+      <span class="mock-msg hide-ar" style="display:none">99213 — inactive SBS code</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-num">+180</div>
+      <div class="stat-label hide-en">قاعدة تحقق</div>
+      <div class="stat-label hide-ar" style="display:none">Validation rules</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">+300</div>
+      <div class="stat-label hide-en">مطالبة / دقيقة</div>
+      <div class="stat-label hide-ar" style="display:none">Claims per minute</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">42%</div>
+      <div class="stat-label hide-en">انخفاض في الرفض</div>
+      <div class="stat-label hide-ar" style="display:none">Denial reduction</div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="section-label hide-en">ما يفعله يقين</div>
+  <div class="section-label hide-ar" style="display:none">What Yaqeen does</div>
+
+  <h2 class="section-title hide-en">تحقق شامل قبل التقديم</h2>
+  <h2 class="section-title hide-ar" style="display:none">Comprehensive pre-submission checks</h2>
+
+  <p class="section-sub hide-en">تسعة فحوصات آلية تعمل على كل مطالبة في ثوانٍ</p>
+  <p class="section-sub hide-ar" style="display:none">Nine automated checks run on every claim in seconds</p>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">⚥</div>
+      <div class="feature-title hide-en">تطابق الجنس مع التشخيص</div>
+      <div class="feature-title hide-ar" style="display:none">Gender–diagnosis match</div>
+      <div class="feature-desc hide-en">يكتشف رموز ICD المخصصة لجنس معين عند تقديمها للجنس الخطأ</div>
+      <div class="feature-desc hide-ar" style="display:none">Detects gender-specific ICD codes billed to the wrong patient sex</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💊</div>
+      <div class="feature-title hide-en">فحص الأدوية</div>
+      <div class="feature-title hide-ar" style="display:none">Drug utilization review</div>
+      <div class="feature-desc hide-en">تعارض الدواء مع التشخيص، خطأ الجنس، القيود العمرية، وتسجيل SFDA</div>
+      <div class="feature-desc hide-ar" style="display:none">Drug–diagnosis conflict, gender mismatch, age restrictions, and SFDA registration</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🦷</div>
+      <div class="feature-title hide-en">فئة الأسنان</div>
+      <div class="feature-title hide-ar" style="display:none">Dental category check</div>
+      <div class="feature-desc hide-en">يرفض مطالبات الأسنان التي تحمل رموز تشخيصية غير سنية</div>
+      <div class="feature-desc hide-ar" style="display:none">Flags dental claims carrying non-dental diagnosis codes</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🤰</div>
+      <div class="feature-title hide-en">رموز الأمومة</div>
+      <div class="feature-title hide-ar" style="display:none">Maternity codes</div>
+      <div class="feature-desc hide-en">يكتشف رموز الأمومة على مطالبات الذكور أو يُنبه للتحقق من الغطاء</div>
+      <div class="feature-desc hide-ar" style="display:none">Catches maternity codes on male patients or alerts to verify coverage</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔄</div>
+      <div class="feature-title hide-en">الخدمات المكررة</div>
+      <div class="feature-title hide-ar" style="display:none">Duplicate services</div>
+      <div class="feature-desc hide-en">يكتشف نفس كود الخدمة المكرر في المطالبة الواحدة</div>
+      <div class="feature-desc hide-ar" style="display:none">Detects the same service code billed twice on the same claim</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📋</div>
+      <div class="feature-title hide-en">صحة كود SBS</div>
+      <div class="feature-title hide-ar" style="display:none">SBS code validity</div>
+      <div class="feature-desc hide-en">يتحقق من وجود كل كود خدمة في قائمة SBS V2 الرسمية وأنه نشط</div>
+      <div class="feature-desc hide-ar" style="display:none">Checks every service code exists in the official SBS V2 list and is active</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2 class="hide-en">جاهز لتقليل الرفض؟</h2>
+  <h2 class="hide-ar" style="display:none">Ready to reduce denials?</h2>
+  <p class="hide-en">ارفع ملف مطالباتك وشاهد النتائج في ثوانٍ</p>
+  <p class="hide-ar" style="display:none">Upload your claims file and see results in seconds</p>
+  <a href="https://yaqeen-validator.streamlit.app" target="_blank" class="btn-white hide-en">← ابدأ الآن</a>
+  <a href="https://yaqeen-validator.streamlit.app" target="_blank" class="btn-white hide-ar" style="display:none">Get started →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="hide-en">© 2026 يقين · مصمم لمزودي الرعاية الصحية في المملكة العربية السعودية</span>
+  <span class="hide-ar" style="display:none">© 2026 Yaqeen · Built for Saudi healthcare providers</span>
+</footer>
+
+<script>
+function toggleLang() {
+  document.body.classList.toggle('en');
+  const isEn = document.body.classList.contains('en');
+  document.documentElement.lang = isEn ? 'en' : 'ar';
+  document.documentElement.dir = isEn ? 'ltr' : 'rtl';
+  document.querySelectorAll('.hide-en').forEach(el => {
+    el.style.display = isEn ? 'none' : '';
+  });
+  document.querySelectorAll('.hide-ar').forEach(el => {
+    el.style.display = isEn ? '' : 'none';
+  });
+}
+</script>
+
+</body>
+</html>
