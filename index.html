@@ -333,54 +333,49 @@
     <p class="section-sub hide-ar" style="display:none">Send your details and we'll reach out within 24 hours</p>
 
     <div class="demo-form">
-      <div id="form-body">
+      <form id="form-body" action="https://formspree.io/f/xrevbvno" method="POST">
         <div class="form-grid">
           <div class="form-row">
             <label class="form-label hide-en">اسم العيادة / المنشأة *</label>
             <label class="form-label hide-ar" style="display:none">Clinic / facility name *</label>
-            <input type="text" class="form-input" id="clinic-name" placeholder="">
+            <input type="text" class="form-input" name="clinic" required placeholder="">
           </div>
           <div class="form-row">
             <label class="form-label hide-en">اسم التواصل *</label>
             <label class="form-label hide-ar" style="display:none">Contact name *</label>
-            <input type="text" class="form-input" id="contact-name" placeholder="">
+            <input type="text" class="form-input" name="contact" required placeholder="">
           </div>
         </div>
         <div class="form-grid">
           <div class="form-row">
             <label class="form-label hide-en">رقم الجوال *</label>
             <label class="form-label hide-ar" style="display:none">Phone number *</label>
-            <input type="tel" class="form-input" id="phone" placeholder="+966">
+            <input type="tel" class="form-input" name="phone" required placeholder="+966">
           </div>
           <div class="form-row">
             <label class="form-label hide-en">البريد الإلكتروني *</label>
             <label class="form-label hide-ar" style="display:none">Email address *</label>
-            <input type="email" class="form-input" id="email" placeholder="">
+            <input type="email" class="form-input" name="email" required placeholder="">
           </div>
         </div>
         <div class="form-row">
           <label class="form-label hide-en">نوع المنشأة</label>
           <label class="form-label hide-ar" style="display:none">Facility type</label>
-          <select class="form-input" id="facility-type">
-            <option value="" class="hide-en">اختر...</option>
-            <option value="" class="hide-ar">Select...</option>
-            <option value="polyclinic" class="hide-en">عيادة متعددة التخصصات</option>
-            <option value="polyclinic" class="hide-ar">Polyclinic</option>
-            <option value="dental" class="hide-en">عيادة أسنان</option>
-            <option value="dental" class="hide-ar">Dental clinic</option>
-            <option value="optical" class="hide-en">مركز بصريات</option>
-            <option value="optical" class="hide-ar">Optical center</option>
-            <option value="physio" class="hide-en">مركز علاج طبيعي</option>
-            <option value="physio" class="hide-ar">Physiotherapy center</option>
-            <option value="other" class="hide-en">أخرى</option>
-            <option value="other" class="hide-ar">Other</option>
+          <select class="form-input" name="facility">
+            <option value="">اختر / Select...</option>
+            <option value="polyclinic">Polyclinic / عيادة متعددة التخصصات</option>
+            <option value="dental">Dental / أسنان</option>
+            <option value="optical">Optical / بصريات</option>
+            <option value="physio">Physiotherapy / علاج طبيعي</option>
+            <option value="other">Other / أخرى</option>
           </select>
         </div>
-        <button class="btn-submit hide-en" onclick="submitForm()">إرسال الطلب</button>
-        <button class="btn-submit hide-ar" style="display:none" onclick="submitForm()">Submit request</button>
+        <input type="hidden" name="_next" value="https://yaqeenhealth.github.io/yaqeen-website/thanks.html">
+        <button type="submit" class="btn-submit hide-en">إرسال الطلب</button>
+        <button type="submit" class="btn-submit hide-ar" style="display:none">Submit request</button>
         <p class="form-note hide-en">لن نشارك بياناتك مع أي طرف ثالث</p>
         <p class="form-note hide-ar" style="display:none">We will not share your information with any third party</p>
-      </div>
+      </form>
 
       <div class="form-success" id="form-success">
         <div class="form-success-icon">✓</div>
